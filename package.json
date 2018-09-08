@@ -1,0 +1,64 @@
+{
+	"name": "fish-ws",
+	"version": "0.0.1",
+	"description": "ws server",
+	"keywords": [
+		"web",
+		"server",
+		"websocket",
+		"cli",
+		"tool",
+		"fish"
+	],
+	"bin": "bin/index.js",
+	"main": "src/app.js",
+	"scripts": {
+		"version": "webpack --version",
+		"fe:dev": "webpack-dev-server --config ./src/webapp/webpack.dev.js",
+		"fe:build": "webpack --config ./src/webapp/webpack.prd.js --progress",
+		"lint": "eslint ./src/*.js",
+		"fix": "eslint --fix ./src/*.js"
+	},
+	"pre-commit": [
+		"fix",
+		"lint"
+	],
+	"repository": {
+		"type": "git",
+		"url": "git@gitee.com:qingkooo/fish-ws.git"
+	},
+	"author": "qingkooo",
+	"license": "MIT",
+	"devDependencies": {
+		"@babel/cli": "^7.0.0",
+		"@babel/core": "^7.0.0",
+		"babel-eslint": "^9.0.0",
+		"babel-loader": "^8.0.2",
+		"@babel/preset-env": "^7.0.0",
+		"@babel/preset-react": "^7.0.0",
+		"@babel/node": "^7.0.0",
+		"clean-webpack-plugin": "^0.1.19",
+		"css-loader": "^0.28.11",
+		"eslint": "^5.1.0",
+		"file-loader": "^1.1.11",
+		"html-webpack-plugin": "^3.2.0",
+		"lodash": "^4.17.10",
+		"mini-css-extract-plugin": "^0.4.0",
+		"node-sass": "^4.9.0",
+		"pre-commit": "^1.2.2",
+		"sass-loader": "^7.0.3",
+		"style-loader": "^0.21.0",
+		"url-loader": "^1.0.1",
+		"webpack": "^4.12",
+		"webpack-bundle-analyzer": "^2.13.1",
+		"webpack-cli": "^3.0.2",
+		"webpack-dev-server": "^3.1.4"
+	},
+	"dependencies": {
+		"axios": "^0.18.0",
+		"chalk": "^2.4.1",
+		"react": "^16.4.1",
+		"react-dom": "^16.4.1",
+		"yargs": "^12.0.1"
+	}
+}
