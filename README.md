@@ -8,9 +8,11 @@
 
 #### 安装教程
 作为cli工具安装
+
 ```cmd
 npm i -g fish-ws
 ```
+
 作为npm包安装
 ```cmd
 npm i fish-ws
@@ -18,9 +20,17 @@ import {app} from 'fish-ws';
 ```
 
 #### 使用说明
+克隆工程后以npmscript来运行环境
 
 ```cmd
-fish-ws -h  // 帮助
-fish-ws -c configfile
-fish-ws // 默认在当前目录下，以config.json启动服务，否则以默认值启动服务
+npm run fe:dev	// 前端开发环境
+npm run fe:build	// 前端打包并部署
+npm start	// 启动ws服务
 ```
+
+```dir
+后端路由：
+/	// 服务端下发消息面板
+/sdk	// sdk端模拟页面
+```
+
