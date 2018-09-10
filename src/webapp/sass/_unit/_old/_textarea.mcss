@@ -1,0 +1,32 @@
+/* textarea */
+
+@abstract u-textarea{
+    $this = ".u-textarea";
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 0.05rem 0.1rem;
+    border: 1px solid $color_extra_black;
+    border-radius: 4px;
+    font-size: 0.14rem;
+    color: $color_light_black;
+    resize: vertical;
+    &:focus {
+        border-color: $color_lightblue;
+        color: $color_black;
+        transition: border linear 0.2s;
+    }
+    &#{$this}--disabled{
+        background-color: $color_extra_light_black;
+        color: $color_ultra_light_black;
+        cursor: not-allowed;
+        resize: none;
+    }
+    &#{$this}--error{
+        background-color: $color_yellow;
+        border-color: $color_lightred;
+        &:focus{
+            border-color: l-adjust($color_lightred,-5%);
+        }
+    }
+}

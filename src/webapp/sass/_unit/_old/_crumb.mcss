@@ -1,0 +1,35 @@
+/* 面包屑 */
+
+@abstract u-crumb{
+    $this = ".u-crumb";
+	$item = ".u-crumb__item";
+    $clearfix();
+    &#{$this}--disabled{
+        #{$item}-link{
+            cursor: not-allowed;
+            $lvha-h({
+                text-decoration: none;
+            });
+        }
+    }
+	#{$item}{
+        float: left;
+        &:not(:first-child):before{
+            content: '>';
+            margin-left: 0.05rem;
+            margin-right: 0.05rem;
+            color: $color_ultra_light_black;
+        }
+		#{$item}-link{
+			font-size: $fs-16;
+			color: $color_blue;
+			$lvha-h({
+				text-decoration: underline;
+			});
+		}
+		#{$item}-text{
+			font-size: $fs-16;
+			color: $color_light_black;
+		}
+    }
+}

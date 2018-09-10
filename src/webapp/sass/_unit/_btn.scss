@@ -1,0 +1,47 @@
+/* web端的按钮 */
+@mixin u-btn{
+    $this : ".u-btn";
+	display: inline-block;
+    padding: 10px 30px;
+    vertical-align: middle;
+    background-color: $color_blue;
+    border: 1px solid $color_blue;
+    border-radius: 4px;
+    outline: 0;
+    font-size: 16px;
+    line-height: 1;
+    text-align: center;
+    color: #fff;
+    text-shadow: 0 1px 1px darken($color_blue,10%);
+    text-decoration: none;
+    cursor: pointer;
+	&:hover{
+		background-color: darken($color_blue,5%);
+	}
+    &#{$this}--block{
+        box-sizing:border-box;
+        display: block;
+		width:100%;
+    }
+    /* 大小定义 */
+    &#{$this}--xl{
+		padding: 20px 50px;
+	}
+    &#{$this}--lg{
+		padding: 15px 40px;
+	}
+    &#{$this}--sm{
+        padding: 5px 20px;
+    }
+    &#{$this}--xs{
+		padding: 3px 16px;
+	}
+
+    /* 状态定义 */
+    &#{$this}--disabled{
+        cursor: not-allowed;
+		color: $color_ultra_light_black;
+        background-color: $color_extra_light_black;
+		border-color: $color_extra_black;
+    }
+}

@@ -1,0 +1,19 @@
+/* radiobox */
+@abstract u-rb{
+    /*变量*/
+    $this = ".u-rb";
+    cursor: pointer;
+    color: $color_black;
+    font-size: $fs-16;
+    line-height: 1;
+    &:hover{
+        color: $color_blue;
+    }
+    &#{$this}--disabled{
+        color: $color_extra_black;
+        cursor: not-allowed;
+    }
+    .u-iconfont{
+        margin-right: 0.06rem;
+    }
+}

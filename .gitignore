@@ -1,6 +1,9 @@
 # bundle
 src/webapp/dist/
 
+# cache
+.sass-cache
+
 # Logs
 logs
 *.log

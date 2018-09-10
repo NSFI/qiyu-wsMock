@@ -1,0 +1,7 @@
+/* 字体图标 */
+
+/* 若能打包,则以此方式导入 */
+@import url("http://at.alicdn.com/t/font_417433_c2p7sztse4cgnwmi.css");
+
+/* 若不能打包,则拷贝$g_iconfont_css_url的实例代码,粘贴到这里来 */
+

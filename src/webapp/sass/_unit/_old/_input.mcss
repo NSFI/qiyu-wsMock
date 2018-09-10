@@ -1,0 +1,30 @@
+/* input */
+@abstract u-input{
+    /* 变量 */
+    $this = ".u-input";
+    box-sizing: border-box;
+    display: block;
+    width: 100%;
+    padding: 0.05rem 0.1rem;
+    border: 1px solid $color_extra_black;
+    border-radius: 4px;
+    font-size: $fs-16;
+    color: $color_light_black;
+    &:focus {
+        border-color: $color_lightblue;
+        color: $color_black;
+		transition: border linear 0.2s;
+    }
+    &#{$this}--disabled{
+        background-color: $color_extra_light_black;
+        color: $color_ultra_light_black;
+        cursor: not-allowed;
+    }
+    &#{$this}--error{
+        background-color: $color_yellow;
+        border-color: $color_lightred;
+        &:focus{
+			border-color: l-adjust($color_lightred,-5%);
+        }
+    }
+}

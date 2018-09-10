@@ -1,0 +1,43 @@
+/* useful grammer */
+
+/* 数据类型复习 */
+//TEXT,STRING,color,FUNCTION,DIMENSION,values,valuesList,BOOLEAN,NULL
+
+/**
+ * 名称: 三元表达式
+ * @param $test [js express]
+ * @param $then [values]
+ * @param $alt  [values]
+ * 使用方法:
+ * $var = 150px;
+ * left: $ternary( $var >= 100px, 200px, 100px);  // =>left:200px
+ */
+$if = ($test, $then, $alt){
+    @if len($arguments) < 2 { error('$if at leat 2 param')}
+        @if $test{
+            @return $then;
+        }
+    @return $alt;
+}
+
+/**
+ * 名称: 映射
+ * if the list value use paren to wrap it force it as a expression;
+ * @param $list [valuelist]
+ * @param $key  [values]
+ * 使用方法:
+ * $list = one 1, two  (2 3), three (3, 4, 5);
+ * $map($list, two) // => 2 3
+ */
+$map = ($list, $key){
+    @if typeof($list) != 'valueslist'{
+        error('must valueslist')
+    }
+    @for $li,$i in $list{
+        @if $i == $key{
+            @return $li;
+        }
+    }
+    @return null;
+}
+

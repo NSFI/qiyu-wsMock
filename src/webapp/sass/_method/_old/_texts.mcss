@@ -1,0 +1,39 @@
+/* 文本特性类 */
+$wrap={
+	white-space: normal;
+	word-wrap: break-word;
+	word-break: break-all;
+};
+$ellipsis={
+	overflow: hidden;
+	word-wrap: normal;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+};
+$ellipsisN=($lines=1){
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: $lines;
+	-webkit-box-orient: vertical;
+};
+$justify={
+	text-align: justify;
+	text-justify: inter-ideograph;
+};
+$nowrap={
+	word-wrap: normal;
+	white-space: nowrap;
+};
+$pre={
+	overflow: hidden;
+	text-align: left;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	word-break: break-all;
+};
+$pre-break-word={
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	word-break: break-all;
+};

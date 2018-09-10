@@ -1,17 +1,189 @@
-import React, { Component, Fragment} from 'react';
+import React, {Component, Fragment} from 'react';
 
-class TodoList extends Component {
-	constructor(){
+class Comp extends Component {
+	constructor() {
 		super();
+		
 		this.state = {
-			text: 'HOME!'
+			platformList:[
+				{
+					id:0,
+					type:'visitor',
+					label:'visitor',
+					checked:1
+				},
+				{
+					id:1,
+					type:'kefu',
+					label:'kefu',
+					checked:0
+				}
+			],
+			msgTypeList:[
+				{
+					id:0,
+					type:'text',
+					label:'text',
+					checked: 1,
+					proxy:0
+				},
+				{
+					id:1,
+					type:'rich',
+					label:'rich',
+					checked: 0,
+					proxy:0
+				},
+				{
+					id:2,
+					type:'qa',
+					label:'qa',
+					checked: 0,
+					proxy:0
+				}
+			],
+			platform:'visitor',	// 平台
+			msgType: 'text',	// 消息类型
+			proxy:[],	// 代理到线上服的消息类型
+			
+			// 消息实体
+			msgData:{}
 		};
+	}
+	doChangePlatform(index,id,e){
+		let list = [...this.state.platformList];
+		list.map((item)=>{
+			if(item.id == id){
+				item.checked = 1;
+				this.setState({
+					platform: item.type
+				})
+			} else{
+				item.checked = 0;
+			}
+		});
+		this.setState({
+			platformList: list,
+		});
+	}
+	doChangeType(index,id,e){
+		let list = [...this.state.msgTypeList];
+		list.map((item)=>{
+			if(item.id == id){
+				item.checked = 1;
+				this.setState({
+					msgType: item.type
+				})
+			}else{
+				item.checked = 0;
+			}
+		});
+		this.setState({
+			msgTypeList : list
+		});
+	}
+	doChangeProxy(id,e){
+		let arr = [...this.state.proxy];
+		let idx = -1;
+		arr.map((item,index)=>{
+			if(item == id) idx = index;
+		});
+		if(idx == -1){
+			arr.push(id);
+		}else{
+			arr.splice(idx,1);
+		}
+		this.setState({
+			proxy: arr
+		});
+	}
+	doSend(){
+		this.setState({
+			msgData:{
+				platform: this.state.platform,
+				msgType: this.state.msgType,
+				proxy: this.state.proxy
+			}
+		},()=>{
+			const xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = ()=>{
+				if(xhr.status == 200){
+					console.log('send success!')
+				}
+			};
+			xhr.open('POST','http://127.0.0.1:3000/send');
+			xhr.setRequestHeader('Content-type','application/json');
+			xhr.send(JSON.stringify(this.state.msgData));
+		})
 	}
 	render() {
 		return (
-			<div>hello,{this.state.text}!</div>
+			<div className="m-server" id="root">
+				<div className="m-server__header">
+					<div className="m-server__header__main">
+						<h2 className="u-ttl h2">W.S. Helper <span className="small">v0.1.0</span></h2>
+					</div>
+					<div className="m-server__header__side">
+						<button className="u-btn" 
+								onClick={this.doSend.bind(this)}
+						>Send Message</button>
+					</div>
+				</div>
+				<div className="m-server__bodyer">
+					<div className="m-server__platform">
+						<h5 className="u-ttl h5">platform: </h5>
+						<ul className="m-server__plist">
+						{
+							this.state.platformList.map((item,index)=>{
+								return (
+									<li key={item.id} >
+										<label className="u-label">
+											<input className="u-cb" type="radio" name="platform" defaultChecked={!!item.checked}
+												   onClick={this.doChangePlatform.bind(this,index,item.id)}
+											/>
+											<span className="u-label__txt">{item.type}</span>
+										</label>
+									</li>
+								)
+							})
+						}
+						</ul>
+					</div>
+					<div className="m-server__goods">
+						<h5 className="u-ttl h5">type:</h5>
+						<ul className="m-server__glist">
+							{
+								this.state.msgTypeList.map((item,index)=>{
+									return (
+										<li key={item.id}>
+											<label className="u-label">
+												<input className="u-cb" type="radio" name="goods" defaultChecked={!!item.checked}
+													   onClick={this.doChangeType.bind(this,index,item.id)}
+												/>
+												<span className="u-label__txt">{item.type}</span>
+											</label>
+											<label className="u-label">
+												<input className="u-rb" type="checkbox" defaultChecked={!!item.proxy}
+													   onClick={this.doChangeProxy.bind(this,item.id)}
+												/>
+												<span className="u-label__txt">proxy</span>
+											</label>
+										</li>
+									)
+								})
+							}
+						</ul>
+					</div>
+				</div>
+				<div className="m-server__footer">
+					<h5 className="u-ttl h5">data: (readonly) </h5>
+					<div className="m-server__data">
+						<textarea className="u-textarea" value={JSON.stringify(this.state.msgData)} readOnly></textarea>
+					</div>
+				</div>
+			</div>
 		);
 	}
 }
 
-export default TodoList;
+export default Comp;

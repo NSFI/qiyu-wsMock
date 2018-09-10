@@ -39,11 +39,10 @@ const config = {
 				}
 			},
 			{
-				test:/\.(sc|c)ss$/,
+				test:/\.(sc|sa|c)ss$/,
 				exclude: /node_modules/,
 				use:[
 					MiniCssExtractPlugin.loader,
-					// 'style-loader',
 					'css-loader',
 					'sass-loader'
 				]
@@ -54,8 +53,8 @@ const config = {
 		new CleanPlugin([path.join(__dirname,'dist')]),
 		// css分离
 		new MiniCssExtractPlugin({
-			filename:'[name].[hash].css',
-			chunkFilename:'[id].css'
+			filename:'[name].[hash:8].css',
+			chunkFilename:'[id].[hash:8].css'
 		}),
 		new AnalyzerPlugin(),
 		// html入口

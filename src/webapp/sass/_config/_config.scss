@@ -1,0 +1,29 @@
+/*
+ * 全局变量
+ */
+
+/* 品牌色 */
+$color_blue : #488BFF;
+$color_orange : #FFBC4D;
+$color_lightblue : #6BA2FF;
+$color_green : #7BD47A;
+$color_lightred : #FF9492;
+$color_yellow : #FFFFEE;
+$color_black : #373D40;
+$color_light_black : #70727D;
+$color_ultra_light_black : #9B9BA3;
+$color_extra_black : #D7D7DB;
+$color_extra_light_black : #F5F6F7;
+
+/* 字号 */
+$fs-24 : 24px;
+$fs-22 : 22px;
+$fs-16 : 16px;
+$fs-14 : 14px;
+$fs-12 : 12px;
+
+/* 字体 */
+@mixin ff-arial {font-family: Arial};
+@mixin ff-simsun {font-family:SimSun};
+@mixin ff-simhei {font-family:SimHei};
+@mixin ff-yahei {font-family:'Microsoft YaHei'};

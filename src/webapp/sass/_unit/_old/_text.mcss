@@ -1,0 +1,31 @@
+.u_text22_black {
+    font-size: 22px;
+    line-height: 30px;
+    color: $color_black;
+}
+.u_text22_white {
+    font-size: 22px;
+    line-height: 30px;
+    color: #fff;
+}
+.u_text12_lightblack {
+    font-size: 12px;
+    line-height: 17px;
+    color: $color_light_black;
+}
+.u_text12_ultra_lightblack {
+    font-size: 12px;
+    line-height: 17px;
+    color: $color_ultra_light_black;
+}
+
+.u_text12_white {
+    font-size: 12px;
+    line-height: 17px;
+    color: #fff;
+}
+.u_text16_black {
+    font-size: 16px;
+    line-height: 22px;
+    color: $color_black;
+}

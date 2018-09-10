@@ -1,0 +1,31 @@
+/* animation && effects */
+
+/* link|visited|hover|active 四种交互 */
+$lvha-l = ($link){
+    &{$link();}
+};
+$lvha-v = ($visited){
+    &:visited{$visited();}
+};
+$lvha-h = ($hover){
+    &:hover{$hover();}
+};
+$lvha-a = ($active){
+    &:active{$active();}
+};
+
+/* 创建动画 */
+$keyframes = ($name, $block){
+    @-webkit-keyframes $name{
+        $block(-webkit-)
+    }
+    @-moz-keyframes $name{
+        $block(-moz-)
+    }
+    @-o-keyframes $name{
+        $block(-o-)
+    }
+    @keyframes $name{
+        $block('')
+    }
+};

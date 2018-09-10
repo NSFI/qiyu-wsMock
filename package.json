@@ -13,12 +13,18 @@
 	"bin": "bin/index.js",
 	"main": "src/app.js",
 	"scripts": {
-		"version": "webpack --version",
 		"fe:dev": "webpack-dev-server --config ./src/webapp/webpack.dev.js",
-		"fe:build": "webpack --config ./src/webapp/webpack.prd.js --progress",
+		"fe:build": "webpack --config ./src/webapp/webpack.prd.js --progress && cp",
+		"fe:clean": "rm -rf ./src/webapp/dist/*",
+		"webpack": "webpack --version",
 		"lint": "eslint ./src/*.js",
-		"fix": "eslint --fix ./src/*.js"
+		"fix": "eslint --fix ./src/*.js",
+		"cp": "rm -rf ./public/fe/* && cp ./src/webapp/dist/* ./public/fe",
+		"start": "node ./src/index.js"
 	},
+	"sideEffects": [
+		"*.css"
+	],
 	"pre-commit": [
 		"fix",
 		"lint"
@@ -57,8 +63,10 @@
 	"dependencies": {
 		"axios": "^0.18.0",
 		"chalk": "^2.4.1",
+		"express": "^4.16.3",
 		"react": "^16.4.1",
 		"react-dom": "^16.4.1",
+		"socket.io": "^2.1.1",
 		"yargs": "^12.0.1"
 	}
 }

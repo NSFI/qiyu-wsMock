@@ -1,0 +1,86 @@
+@import "../_config/_import.scss";
+
+html{
+    height: 100%;
+}
+body{
+    height: 100%;
+    background-color: #F5F6F7;
+}
+
+.m-server{
+    box-sizing: border-box;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0 50px;
+    .m-server__header{
+        padding-bottom: 20px;
+        .m-server__header__main{
+            .small{
+                font-size: 12px;
+                color: #999;
+            }
+        }
+        .m-server__header__side{}
+    }
+    .m-server__bodyer{}
+	.m-server__footer{
+		.u-textarea{
+			min-height: 300px;
+		}
+	}
+    .m-server__platform{
+        .u-label{
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+    }
+    .m-server__goods{
+        padding-top: 10px;
+        .m-server__glist{
+            .u-label{
+                margin-bottom: 10px;
+                margin-left: 10px;
+				.u-label__txt{
+					display: inline-block;
+					min-width: 80px;
+				}
+            }
+        }
+		.m-server__g2list{
+			padding-left: 50px;
+		}
+    }
+}
+
+// 元件
+.u-cb{
+    @include u-cb;
+}
+.u-btn{
+    @include u-btn;
+}
+.u-ttl{
+    line-height: 3;
+    color: #333;
+    font-weight: 400;
+    &.h1{font-size: 40px}
+    &.h2{font-size: 34px}
+    &.h3{font-size: 28px}
+    &.h4{font-size: 22px}
+    &.h5{font-size: 18px}
+    &.h6{font-size: 14px}
+}
+.u-label{
+    display: inline-block;
+    font-size: 14px;
+    color: #666;
+    .u-label__txt{
+        margin-left: 5px;
+    }
+}
+.u-textarea{
+	@include u-textarea;
+}

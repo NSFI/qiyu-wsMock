@@ -1,0 +1,119 @@
+/* helpful clips */
+
+/*
+ * 名称：placehodler伪类（元素）
+ * @param $block 代码块
+ * 用法：
+ * $placeholder(
+ *    font-size:14px;
+ *    color:#ccc;
+ *  );
+ */
+$placeholder = ($block){
+    &::#{-webkit-input-placeholder, -moz-placeholder} {
+        $block()
+    }
+    &:#{-moz-placeholder, -ms-placeholder} {
+        $block()
+    }
+}
+/*
+ * 名称: 清除浮动
+ * 用法：
+ * div{
+ *    $clearfix();
+ *    .left{float:left}
+ *    .right{float:right}
+ *  }
+ */
+$clearfix = {
+    *zoom: 1;
+    &:before, &:after {
+        display: table;
+        content: "";
+        line-height: 0;
+    }
+    &:after {
+        clear: both;
+    }
+}
+/*
+ * 名称：块状行内元素
+ * 用法：
+ * div{$inline-block()}
+ */
+$inline-block = {
+    display: inline-block;
+    vertical-align: baseline;
+    zoom: 1;
+    *display: inline;
+    *vertical-align: auto;
+}
+/*
+ * 名称：滚动条
+ */
+$scroll = ($width = 7px , $bgcolor = #dddfe0){
+    &::-webkit-scrollbar {
+        width: $width;
+        height:$width;
+    }
+    &::-webkit-scrollbar-button {
+        display: none;
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: $width;
+        background: $bgcolor;
+    }
+    &::-webkit-scrollbar-track {
+        width: $width;
+        background: transparent;
+    }
+    &::-webkit-scrollbar-track-piece {
+        background: transparent;
+    }
+}
+
+/**
+ * 名称：箭头
+ * @param $borderWidthList,border-width列表，箭头对边的border-width默认为0，方向遵循w3c的上右下左顺序
+ * @param $color,border-color 箭头颜色
+ */
+$arrow = ($borderWidthList,$color){
+    $direct = top right bottom left;
+    $reversedirect = bottom left top right;
+    width:0;
+    height:0;
+    font-size:0;
+    border-style: solid;
+    border-color:transparent;
+    @for $width,$i of $borderWidthList{
+        border-#{index($direct,$i)}-width:$width;
+        @if($width == 0){
+            border-#{index($reversedirect,$i)}-color:$color;
+        }
+    }
+}
+
+/*
+ * 名称: 私有前缀
+ * @param $property [values]
+ * @param $value    [values]
+ * @param $vendors  [valuelist], 不填则输出全部
+ * 使用方法:
+ * $prefixr(box-sizing, border-box ,(webkit moz));// -->
+ * // -webkit-box-sizing:border-box;
+ * // -moz-box-sizing:border-box;
+ * // box-sizing:border-box;
+ */
+$prefixr = ($property, $value , $vendors){
+    $vendors ?= webkit moz ms o;
+    @if $value == null {
+    @return {
+    @return $prefixr($property, $arguments, $vendors);
+    }
+    }
+    @for $vendor of $vendors {
+        #{'-' + $vendor + '-' + $property} : $value;
+    }
+    #{$property} : $value;
+}

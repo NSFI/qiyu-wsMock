@@ -1,0 +1,22 @@
+/* 箭头 */
+/* 使用方式: <i class="u-arrow arrow-left"></i> */
+
+@abstract u-arrow{
+    $this = ".u-arrow";
+	$inline-block();
+	vertical-align: middle;
+	width: 0;
+	height: 0;
+	&#{$this}--left {
+		$arrow(5px 5px 5px 0, $color_light_black);
+	}
+	&#{$this}--right {
+		$arrow(5px 0 5px 5px, $color_light_black);
+	}
+	&#{$this}--top {
+		$arrow(0 5px 5px 5px, $color_light_black);
+	}
+	&#{$this}--bottom {
+		$arrow(5px 5px 0 5px, $color_light_black);
+	}
+}

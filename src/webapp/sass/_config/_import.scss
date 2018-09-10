@@ -1,0 +1,28 @@
+/* 公共样式组合输出,业务中引用此文件即可! */
+
+/* 配置项 */
+@import "./_config.scss";
+
+/* mixin */
+//@import "../_mixin/_grid.scss";
+//@import "../_mixin/_effects.mcss";
+//@import "../_mixin/_grammers.mcss";
+//@import "../_mixin/_helpers.mcss";
+//@import "../_mixin/_texts.mcss";
+
+/* abstract-unit */
+@import "../_unit/_btn.scss";
+@import "../_unit/_cb.scss";
+//@import "../_unit/_crumb.mcss";
+//@import "../_unit/_iconfont.mcss";
+//@import "../_unit/_img.mcss";
+//@import "../_unit/_input.mcss";
+//@import "../_unit/_loading.mcss";
+//@import "../_unit/_rb.mcss";
+@import "../_unit/_textarea.scss";
+//@import "../_unit/_toast.mcss";
+//@import "../_unit/_text.mcss";
+/* abstract-module */
+
+/* resetsheet */
+@import "./_reset.scss";

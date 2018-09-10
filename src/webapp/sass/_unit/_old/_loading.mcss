@@ -1,0 +1,27 @@
+@abstract u-loading{
+    /*变量*/
+	$this = ".u-loading";
+
+    $inline-block();
+    text-align: center;
+    position: relative;
+    .u-iconfont{
+        position: absolute;
+        top:0;
+        left:0;
+        font-size: 0.18rem;
+        vertical-align: middle;
+        /* 后期可抽出 */
+        $keyframes(loading,{
+            0%   {transform: rotate(0deg)}
+            100% {transform: rotate(360deg)}
+        });
+        $prefixr(animation,loading 2s infinite linear,(webkit moz));
+    }
+    #{$this}__text{
+        padding: 0 0.22rem;
+        font-size: 0.14rem;
+        line-height: 1.5;
+        vertical-align: middle;
+    }
+}

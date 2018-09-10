@@ -1,0 +1,24 @@
+@abstract u-toast{
+    $this = ".u-toast";
+    box-sizing: border-box;
+    $inline-block();
+    width:auto;
+    max-width: 80%;
+    padding:0.1rem 0.3rem;
+    background-color: $color_orange;
+    font-size: $fs-16;
+    color: #fff;
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+    white-space: normal;
+    word-break: break-all;
+    &#{$this}--fixed{
+        position: fixed;
+        top:0;
+        left:50%;
+        max-width: 80%;
+        transform: translateX(-50%);
+        white-space: normal;
+        word-break: break-all;
+    }
+}
