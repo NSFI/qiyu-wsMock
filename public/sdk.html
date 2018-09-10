@@ -25,7 +25,6 @@
 	var node_form = document.getElementsByClassName('form')[0];
 	var node_input = node_form.getElementsByTagName('input')[0];
 	var node_btn = node_form.getElementsByTagName('button')[0];
-	var node_ul = document.getElementById('messages');
 
 	node_btn.addEventListener('click',function (e) {
 		var value = node_input.value || '';
@@ -42,7 +41,7 @@
 	socket.on('down',function (v) {
 		console.log('下发数据：',v);
 
-	})
+	});
 </script>
 </body>
 </html>

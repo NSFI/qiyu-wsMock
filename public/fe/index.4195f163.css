@@ -1,0 +1,231 @@
+@charset "UTF-8";
+/* 公共样式组合输出,业务中引用此文件即可! */
+/* 配置项 */
+/*
+ * 全局变量
+ */
+/* 品牌色 */
+/* 字号 */
+/* 字体 */
+/* mixin */
+/* abstract-unit */
+/* web端的按钮 */
+/* checkbox */
+/* textarea */
+/* abstract-module */
+/* resetsheet */
+/*
+ * web和mobile共用的重置样式
+ */
+/* 对标签的定义和初始化 */
+html, body, h1, h2, h3, h4, h5, h6, div, dl, dt, dd, ul, ol, li, p, blockquote, pre, hr, figure, table, caption, th, td, form, fieldset, legend, input, button, textarea, menu, img {
+  margin: 0;
+  padding: 0; }
+
+header, footer, section, article, aside, nav, hgroup, address, figure, figcaption, menu, details {
+  display: block; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+caption, th {
+  text-align: left;
+  font-weight: normal; }
+
+html, body, fieldset, img, iframe, abbr {
+  border: 0; }
+
+i, cite, em, var, address, dfn {
+  font-style: normal; }
+
+[hidefocus], summary {
+  outline: 0; }
+
+li {
+  list-style: none; }
+
+h1, h2, h3, h4, h5, h6, small {
+  font-size: 100%; }
+
+sup, sub {
+  font-size: 83%; }
+
+pre, code, kbd, samp {
+  font-family: inherit; }
+
+q:before, q:after {
+  content: none; }
+
+textarea {
+  overflow: auto;
+  resize: none; }
+
+label, summary {
+  cursor: default; }
+
+a, button {
+  cursor: pointer; }
+
+h1, h2, h3, h4, h5, h6, em, strong, b {
+  font-weight: bold; }
+
+del, ins, u, s, a, a:hover {
+  text-decoration: none; }
+
+body, textarea, input, button, select, keygen, legend {
+  font: 12px/1.5 arial, \5b8b\4f53;
+  color: #373D40;
+  outline: 0; }
+
+input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill {
+  background-color: transparent; }
+
+body {
+  background: #fff;
+  font-family: "Helvetica Neue", PingFangSC-regular, "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", " sans-serif"; }
+
+a, a:hover {
+  color: #488BFF; }
+
+img {
+  font-size: 0; }
+
+/* 其他 */
+html {
+  font-size: 100px; }
+
+html {
+  height: 100%; }
+
+body {
+  height: 100%;
+  background-color: #F5F6F7; }
+
+.m-server {
+  box-sizing: border-box;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0 50px; }
+  .m-server .m-server__header {
+    padding-bottom: 20px; }
+    .m-server .m-server__header .m-server__header__main .small {
+      font-size: 12px;
+      color: #999; }
+  .m-server .m-server__footer .u-textarea {
+    min-height: 300px; }
+  .m-server .m-server__platform .u-label {
+    margin-right: 10px;
+    margin-left: 10px; }
+  .m-server .m-server__goods {
+    padding-top: 10px; }
+    .m-server .m-server__goods .m-server__glist .u-label {
+      margin-bottom: 10px;
+      margin-left: 10px; }
+      .m-server .m-server__goods .m-server__glist .u-label .u-label__txt {
+        display: inline-block;
+        min-width: 80px; }
+    .m-server .m-server__goods .m-server__g2list {
+      padding-left: 50px; }
+
+.u-cb {
+  cursor: pointer;
+  color: #373D40;
+  font-size: 16px;
+  line-height: 1; }
+  .u-cb:hover {
+    color: #488BFF; }
+  .u-cb.u-cb--disabled {
+    color: #D7D7DB;
+    cursor: not-allowed; }
+  .u-cb .u-iconfont {
+    margin-right: 0.06rem; }
+
+.u-btn {
+  display: inline-block;
+  padding: 10px 30px;
+  vertical-align: middle;
+  background-color: #488BFF;
+  border: 1px solid #488BFF;
+  border-radius: 4px;
+  outline: 0;
+  font-size: 16px;
+  line-height: 1;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 1px 1px #156bff;
+  text-decoration: none;
+  cursor: pointer;
+  /* 大小定义 */
+  /* 状态定义 */ }
+  .u-btn:hover {
+    background-color: #2f7bff; }
+  .u-btn.u-btn--block {
+    box-sizing: border-box;
+    display: block;
+    width: 100%; }
+  .u-btn.u-btn--xl {
+    padding: 20px 50px; }
+  .u-btn.u-btn--lg {
+    padding: 15px 40px; }
+  .u-btn.u-btn--sm {
+    padding: 5px 20px; }
+  .u-btn.u-btn--xs {
+    padding: 3px 16px; }
+  .u-btn.u-btn--disabled {
+    cursor: not-allowed;
+    color: #9B9BA3;
+    background-color: #F5F6F7;
+    border-color: #D7D7DB; }
+
+.u-ttl {
+  line-height: 3;
+  color: #333;
+  font-weight: 400; }
+  .u-ttl.h1 {
+    font-size: 40px; }
+  .u-ttl.h2 {
+    font-size: 34px; }
+  .u-ttl.h3 {
+    font-size: 28px; }
+  .u-ttl.h4 {
+    font-size: 22px; }
+  .u-ttl.h5 {
+    font-size: 18px; }
+  .u-ttl.h6 {
+    font-size: 14px; }
+
+.u-label {
+  display: inline-block;
+  font-size: 14px;
+  color: #666; }
+  .u-label .u-label__txt {
+    margin-left: 5px; }
+
+.u-textarea {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  padding: 5px 5px;
+  border: 1px solid #D7D7DB;
+  border-radius: 4px;
+  font-size: 0.14rem;
+  color: #70727D;
+  resize: vertical; }
+  .u-textarea:focus {
+    border-color: #6BA2FF;
+    color: #373D40;
+    transition: border linear 0.2s; }
+  .u-textarea.u-textarea--disabled {
+    background-color: #F5F6F7;
+    color: #9B9BA3;
+    cursor: not-allowed;
+    resize: none; }
+  .u-textarea.u-textarea--error {
+    background-color: #FFFFEE;
+    border-color: #FF9492; }
+    .u-textarea.u-textarea--error:focus {
+      border-color: #ff7b79; }
+

@@ -14,17 +14,15 @@
 	"main": "src/app.js",
 	"scripts": {
 		"fe:dev": "webpack-dev-server --config ./src/webapp/webpack.dev.js",
-		"fe:build": "webpack --config ./src/webapp/webpack.prd.js --progress && cp",
+		"fe:build": "NODE_ENV=production npm run fe:clean && webpack --config ./src/webapp/webpack.prd.js --progress && npm run clean && npm run cp",
 		"fe:clean": "rm -rf ./src/webapp/dist/*",
 		"webpack": "webpack --version",
 		"lint": "eslint ./src/*.js",
 		"fix": "eslint --fix ./src/*.js",
-		"cp": "rm -rf ./public/fe/* && cp ./src/webapp/dist/* ./public/fe",
+		"clean": "rm -rf ./public/fe/*",
+		"cp": "cp ./src/webapp/dist/* ./public/fe/",
 		"start": "node ./src/index.js"
 	},
-	"sideEffects": [
-		"*.css"
-	],
 	"pre-commit": [
 		"fix",
 		"lint"
@@ -38,11 +36,11 @@
 	"devDependencies": {
 		"@babel/cli": "^7.0.0",
 		"@babel/core": "^7.0.0",
-		"babel-eslint": "^9.0.0",
-		"babel-loader": "^8.0.2",
+		"@babel/node": "^7.0.0",
 		"@babel/preset-env": "^7.0.0",
 		"@babel/preset-react": "^7.0.0",
-		"@babel/node": "^7.0.0",
+		"babel-eslint": "^9.0.0",
+		"babel-loader": "^8.0.2",
 		"clean-webpack-plugin": "^0.1.19",
 		"css-loader": "^0.28.11",
 		"eslint": "^5.1.0",

@@ -4,7 +4,6 @@
 * */
 
 const AnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const CleanPlugin = require('clean-webpack-plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
@@ -15,8 +14,9 @@ const config = {
 		index:path.join(__dirname,'index.js')
 	},
 	output: {
-		filename: "[name].[chunkhash:8].js",
-		path:path.join(__dirname,'dist')
+		filename: "[name].js",
+		path:path.join(__dirname,'dist'),
+		publicPath: "./"
 	},
 	mode : 'production',
 	module: {
@@ -39,7 +39,7 @@ const config = {
 				}
 			},
 			{
-				test:/\.(sc|sa|c)ss$/,
+				test:/\.(sc|c)ss$/,
 				exclude: /node_modules/,
 				use:[
 					MiniCssExtractPlugin.loader,
@@ -50,13 +50,11 @@ const config = {
 		]
 	},
 	plugins: [
-		new CleanPlugin([path.join(__dirname,'dist')]),
-		// css分离
 		new MiniCssExtractPlugin({
 			filename:'[name].[hash:8].css',
-			chunkFilename:'[id].[hash:8].css'
+			chunkFilename:'[id].css'
 		}),
-		new AnalyzerPlugin(),
+		// new AnalyzerPlugin(),
 		// html入口
 		new HtmlPlugin({
 			title:'prd_fish-websocket-server',

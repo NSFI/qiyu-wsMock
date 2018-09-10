@@ -24,29 +24,24 @@ class Comp extends Component {
 					id:0,
 					type:'text',
 					label:'text',
-					checked: 1,
-					proxy:0
+					checked: 1
 				},
 				{
 					id:1,
-					type:'rich',
-					label:'rich',
-					checked: 0,
-					proxy:0
+					type:'image',
+					label:'image',
+					checked: 0
 				},
 				{
-					id:2,
-					type:'qa',
-					label:'qa',
-					checked: 0,
-					proxy:0
+					id:10,
+					type:'rich',
+					label:'rich',
+					checked: 0
 				}
 			],
-			platform:'visitor',	// 平台
-			msgType: 'text',	// 消息类型
-			proxy:[],	// 代理到线上服的消息类型
-			
-			// 消息实体
+			platform:0,	// 平台类型
+			msgType: 0,	// 消息类型
+			// 上报实体
 			msgData:{}
 		};
 	}
@@ -56,7 +51,7 @@ class Comp extends Component {
 			if(item.id == id){
 				item.checked = 1;
 				this.setState({
-					platform: item.type
+					platform: item.id
 				})
 			} else{
 				item.checked = 0;
@@ -72,7 +67,7 @@ class Comp extends Component {
 			if(item.id == id){
 				item.checked = 1;
 				this.setState({
-					msgType: item.type
+					msgType: item.id
 				})
 			}else{
 				item.checked = 0;
@@ -82,27 +77,11 @@ class Comp extends Component {
 			msgTypeList : list
 		});
 	}
-	doChangeProxy(id,e){
-		let arr = [...this.state.proxy];
-		let idx = -1;
-		arr.map((item,index)=>{
-			if(item == id) idx = index;
-		});
-		if(idx == -1){
-			arr.push(id);
-		}else{
-			arr.splice(idx,1);
-		}
-		this.setState({
-			proxy: arr
-		});
-	}
 	doSend(){
 		this.setState({
 			msgData:{
 				platform: this.state.platform,
-				msgType: this.state.msgType,
-				proxy: this.state.proxy
+				msgType: this.state.msgType
 			}
 		},()=>{
 			const xhr = new XMLHttpRequest();
@@ -161,12 +140,6 @@ class Comp extends Component {
 													   onClick={this.doChangeType.bind(this,index,item.id)}
 												/>
 												<span className="u-label__txt">{item.type}</span>
-											</label>
-											<label className="u-label">
-												<input className="u-rb" type="checkbox" defaultChecked={!!item.proxy}
-													   onClick={this.doChangeProxy.bind(this,item.id)}
-												/>
-												<span className="u-label__txt">proxy</span>
 											</label>
 										</li>
 									)
