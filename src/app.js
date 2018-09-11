@@ -13,6 +13,7 @@ const chalk = require('chalk');
 
 const baseCfg = require('./config/base.js');
 const openUrl = require('./helper/openUrl.js');
+const msgType = require('./config/msgType');
 
 app.use(bodyParser.json());
 
@@ -35,22 +36,22 @@ class Server{
 		
 		// 长链接已连接
 		io.on('connection', function(socket){
+			console.log('ws已经连接！');
 			// 断开长链接
 			socket.on('disconnect',function () {
-				console.log('user disconnected');
-			});
-			// 收到消息
-			socket.on('up',function (msg) {
-				console.log('上报数据: ',msg);
+				console.log('disconnect');
 			});
 			// 异步接口
 			app.post('/send',function (req,res) {
-				socket.emit('down',JSON.stringify(req.body));
+				const value = msgType[req.body.msgType];
+				socket.broadcast.emit('_message',JSON.stringify(value));
+				
 				res.status(200).send({
 					code:200,
 					message:'ok',
 					result:req.body
 				});
+				console.log('down')
 			});
 		});
 		app.use(router);
