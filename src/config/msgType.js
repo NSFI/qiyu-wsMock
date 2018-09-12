@@ -15,7 +15,7 @@ module.exports = {
 			url:'https://socket.io/images/mixmax.png'
 		})
 	},
-	10: {
+	65: {
 		type: 'custom',
 		content: JSON.stringify({
 			cmd:65,

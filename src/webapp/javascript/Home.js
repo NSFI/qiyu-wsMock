@@ -33,9 +33,9 @@ class Comp extends Component {
 					checked: 0
 				},
 				{
-					id:10,
-					type:'rich',
-					label:'rich',
+					id:65,
+					type:'custom',
+					label:'custom',
 					checked: 0
 				}
 			],
