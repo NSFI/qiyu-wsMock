@@ -19,6 +19,7 @@ const msgType = require('./config/msgType');
 class Server{
 	constructor(config){
 		this.conf = Object.assign({},baseCfg,config);
+		this.socket = null;
 	}
 	// 驱动服务
 	start(){
@@ -33,26 +34,43 @@ class Server{
 		app.get('/',function (req,res) {
 			res.sendFile(process.cwd() + '/public/fe/index.html');
 		});
-		
+		app.post('/send',function (req,res) {
+			const data = msgType[req.body.msgType];
+			const type = data.type;
+			if(data.type == 'custom'){
+				io.emit('_customSysMsg',JSON.stringify(data));
+			}else{
+				io.emit('_message',JSON.stringify(data));
+			}
+
+			res.status(200).send({
+				code:200,
+				message:'ok',
+				result:req.body
+			});
+			console.log('下发：',value);
+		});
+		app.post('/switch',function (req,res) {
+			const content = JSON.parse(msgType[req.body.id].content);
+			const value = {
+				cmd:content.cmd,
+				value:req.body.switch || 0
+			};
+			io.emit('_switch',JSON.stringify(value));
+
+			res.status(200).send({
+				code:200,
+				message:'ok',
+				result:req.body
+			});
+			console.log('下发：',value);
+		});
 		// 长链接已连接
 		io.on('connection', function(socket){
 			console.log(`${chalk.green('ws已连接！')}`);
 			// 断开长链接
 			socket.on('disconnect',function () {
 				console.log(`${chalk.red('ws已断开！')}`);
-				
-			});
-			// 异步接口
-			app.post('/send',function (req,res) {
-				const value = msgType[req.body.msgType];
-				socket.emit('_message',JSON.stringify(value));
-				
-				res.status(200).send({
-					code:200,
-					message:'ok',
-					result:req.body
-				});
-				console.log('下发：',value);
 			});
 		});
 		

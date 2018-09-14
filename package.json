@@ -23,10 +23,10 @@
 		"cp": "cp ./src/webapp/dist/* ./public/fe/",
 		"start": "node ./src/index.js"
 	},
-	"pre-commit": [
-		"fix",
-		"lint"
-	],
+//	"pre-commit": [
+//		"fix",
+//		"lint"
+//	],
 	"repository": {
 		"type": "git",
 		"url": "git@gitee.com:qingkooo/fish-ws.git"

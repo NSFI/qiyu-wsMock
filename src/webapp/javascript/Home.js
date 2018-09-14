@@ -7,37 +7,36 @@ class Comp extends Component {
 		this.state = {
 			platformList:[
 				{
-					id:0,
-					type:'visitor',
-					label:'visitor',
+					id:'visitor',
 					checked:1
 				},
 				{
-					id:1,
-					type:'kefu',
-					label:'kefu',
+					id:'kefu',
 					checked:0
 				}
 			],
 			msgTypeList:[
 				{
-					id:0,
-					type:'text',
-					label:'text',
+					id:'text',
 					checked: 1
 				},
 				{
-					id:1,
-					type:'image',
-					label:'image',
+					id:'image',
 					checked: 0
 				},
 				{
-					id:65,
-					type:'custom',
-					label:'custom',
+					id:'onconnect',
 					checked: 0
-				}
+				},
+				{
+					id:'onkefu',
+					checked: 0,
+					switch: 0	// 0mock,1online
+				},
+				{
+					id:'rich',
+					checked: 0
+				},
 			],
 			platform:0,	// 平台类型
 			msgType: 0,	// 消息类型
@@ -77,6 +76,20 @@ class Comp extends Component {
 			msgTypeList : list
 		});
 	}
+	// 切换开关
+	doChangeSwitch(index,id,e){
+		const {msgTypeList} = this.state;
+		const list = [...this.state.msgTypeList];
+		list[index].switch = list[index].switch ? 0 : 1;
+		this.setState({
+			msgTypeList: list
+		},()=>{
+			this.xhr('/switch',{
+				method:'POST',
+				data: list[index]
+			});
+		})
+	}
 	doSend(){
 		this.setState({
 			msgData:{
@@ -84,23 +97,30 @@ class Comp extends Component {
 				msgType: this.state.msgType
 			}
 		},()=>{
-			const xhr = new XMLHttpRequest();
-			xhr.onreadystatechange = ()=>{
-				if(xhr.status == 200){
-					console.log('send success!')
-				}
-			};
-			xhr.open('POST','http://127.0.0.1:3000/send');
-			xhr.setRequestHeader('Content-type','application/json');
-			xhr.send(JSON.stringify(this.state.msgData));
+			this.xhr('/send',{
+				method:'POST',
+				data:this.state.msgData
+			});
 		})
+	}
+	xhr(url,option){
+		const xhr = new XMLHttpRequest();
+		const {method,mime,data} = option;
+		xhr.onreadystatechange = ()=>{
+			if(xhr.status == 200){
+				console.log(url+'send success!')
+			}
+		};
+		xhr.open(method,'http://127.0.0.1:3000' + url);
+		xhr.setRequestHeader('Content-Type','application/json');
+		xhr.send(JSON.stringify(data));
 	}
 	render() {
 		return (
 			<div className="m-server" id="root">
 				<div className="m-server__header">
 					<div className="m-server__header__main">
-						<h2 className="u-ttl h2">W.S. Helper <span className="small">v0.1.0</span></h2>
+						<h2 className="u-ttl h2">W.S. Helper <span className="small">v0.0.1</span></h2>
 					</div>
 					<div className="m-server__header__side">
 						<button className="u-btn" 
@@ -120,7 +140,7 @@ class Comp extends Component {
 											<input className="u-cb" type="radio" name="platform" defaultChecked={!!item.checked}
 												   onClick={this.doChangePlatform.bind(this,index,item.id)}
 											/>
-											<span className="u-label__txt">{item.type}</span>
+											<span className="u-label__txt">{item.id}</span>
 										</label>
 									</li>
 								)
@@ -139,7 +159,13 @@ class Comp extends Component {
 												<input className="u-cb" type="radio" name="goods" defaultChecked={!!item.checked}
 													   onClick={this.doChangeType.bind(this,index,item.id)}
 												/>
-												<span className="u-label__txt">{item.type}</span>
+												<span className="u-label__txt">{item.id}</span>
+											</label>
+											<label className="u-label">
+												<input className="u-cb" type="checkbox" name="switch" defaultChecked={!!item.switch}
+													   onClick={this.doChangeSwitch.bind(this,index,item.id)}
+												/>
+												<span className="u-label__txt">线上</span>
 											</label>
 										</li>
 									)
