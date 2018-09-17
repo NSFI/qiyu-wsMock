@@ -25,22 +25,27 @@ class Server{
 	start(){
 		// 解析req，生成body
 		app.use(bodyParser.json());
-		//静态资源文件指定目录
+		//静态资源
 		router.get('/:name',function (req,res) {
-			res.sendFile(process.cwd() + '/public/fe' + req.url);
+			const isFavico = req.url.indexOf('favicon.ico');
+			const dir = (isFavico == -1) ? '/public/fe/' : '/public/';
+			res.sendFile(process.cwd() + dir + req.url);
 		});
 		app.use(router);
+		
 		// 路由
 		app.get('/',function (req,res) {
 			res.sendFile(process.cwd() + '/public/fe/index.html');
 		});
 		app.post('/send',function (req,res) {
 			const data = msgType[req.body.msgType];
-			const type = data.type;
+			
 			if(data.type == 'custom'){
 				io.emit('_customSysMsg',JSON.stringify(data));
+				console.log('下发：自定义消息')
 			}else{
 				io.emit('_message',JSON.stringify(data));
+				console.log('下发：基础消息')
 			}
 
 			res.status(200).send({
@@ -48,7 +53,6 @@ class Server{
 				message:'ok',
 				result:req.body
 			});
-			console.log('下发：',value);
 		});
 		app.post('/switch',function (req,res) {
 			const content = JSON.parse(msgType[req.body.id].content);
@@ -57,21 +61,20 @@ class Server{
 				value:req.body.switch || 0
 			};
 			io.emit('_switch',JSON.stringify(value));
-
+			console.log('下发：',value);
 			res.status(200).send({
 				code:200,
 				message:'ok',
 				result:req.body
 			});
-			console.log('下发：',value);
 		});
 		// 长链接已连接
 		io.on('connection', function(socket){
-			console.log(`${chalk.green('ws已连接！')}`);
 			// 断开长链接
 			socket.on('disconnect',function () {
 				console.log(`${chalk.red('ws已断开！')}`);
 			});
+			console.log(`${chalk.green('ws已连接！')}`);
 		});
 		
 		// 监听
