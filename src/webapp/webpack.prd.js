@@ -11,7 +11,8 @@ const path = require('path');
 const config = {
 	devtool : '#hidden-source-map',
 	entry: {
-		index:path.join(__dirname,'index.js')
+		index: path.join(__dirname, 'index.js'),
+		sdk: path.join(__dirname, 'sdk.js')
 	},
 	output: {
 		filename: "[name].js",
@@ -69,7 +70,7 @@ const config = {
 		splitChunks : {
 			chunks: 'all',		// initial/async/all(default)
 			minSize: 30000,	// 压缩前最小体积为该值（byte）即匹配，(default)
-			minChunks: 1,		// 被引用次数小于等于该值即匹配，1（default）
+			minChunks: 99999,		// 被引用次数小于等于该值即匹配，1（default）
 			maxAsyncRequests: 5,	// 在按需加载模式时，请求数量达到该值即匹配（5 default）
 			maxInitialRequests: 3,	// 在初始化加载模式时，引用次数达到该值即匹配（1 default）
 			automaticNameDelimiter:'_',	// 自动命名时的块名称之间的连接符号

@@ -17,7 +17,8 @@ const config = {
 		hot:true
 	},
 	entry: {
-		index:path.join(__dirname,'index.js')
+		index:path.join(__dirname,'index.js'),
+		sdk: path.join(__dirname, 'sdk.js')
 	},
 	output: {
 		filename: "[name].js",
