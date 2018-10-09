@@ -25,6 +25,15 @@ class Server{
 	start(){
 		// 解析req，生成body
 		app.use(bodyParser.json());
+		
+		app.get('/getMsgTypeMap', (req, res) => {
+			const msgType = this.getMsgType();
+			res.status(200).send({
+				code: 200,
+				message: 'ok',
+				result: msgType
+			});
+		})
 		//静态资源
 		router.get('/:name',function (req,res) {
 			const isFavico = req.url.indexOf('favicon.ico');
@@ -37,7 +46,8 @@ class Server{
 		app.get('/',function (req,res) {
 			res.sendFile(process.cwd() + '/public/fe/index.html');
 		});
-		app.post('/send',function (req,res) {
+		app.post('/send', (req,res) => {
+			const msgType = this.getMsgType();
 			const data = msgType[req.body.msgType];
 			
 			if(data.type == 'custom'){
@@ -83,6 +93,23 @@ class Server{
 			openUrl(addr);
 			console.log(`${chalk.green('server start at')} ${addr}`);
 		});
+	}
+	getMsgType() {
+		var ret;
+		try{
+			const content = fs.readFileSync('msgType.json', 'utf-8');
+			ret = JSON.parse(content);
+		}catch(err) {
+			ret = msgType;
+		}
+ 
+		Object.keys(ret).forEach((key) => {
+			var item = ret[key];
+			if (typeof item.content != 'string') {
+				item.content = JSON.stringify(item.content);
+			}
+		});
+		return ret;
 	}
 }
 

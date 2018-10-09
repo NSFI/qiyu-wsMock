@@ -10,39 +10,29 @@ class Comp extends Component {
 					id:'visitor',
 					checked:1
 				},
-				{
+				/* {
 					id:'kefu',
 					checked:0
-				}
+				} */
 			],
-			msgTypeList:[
-				{
-					id:'text',
-					checked: 1
-				},
-				{
-					id:'image',
-					checked: 0
-				},
-				{
-					id:'onconnect',
-					checked: 0
-				},
-				{
-					id:'onkefu',
-					checked: 0,
-					switch: 0	// 0mock,1online
-				},
-				{
-					id:'rich',
-					checked: 0
-				},
-			],
+			msgTypeMap: {},
 			platform:0,	// 平台类型
-			msgType: 0,	// 消息类型
+			msgType: '',	// 消息类型
 			// 上报实体
-			msgData:{}
+			msgData: null
 		};
+	}
+	componentDidMount() {
+		this.xhr('/getMsgTypeMap', {
+			method: 'GET',
+			onload: this.onMsgTypeMapLoad.bind(this)
+		});
+	}
+	onMsgTypeMapLoad(res) {
+		const result = JSON.parse(res).result;
+		this.setState({
+			msgTypeMap: result
+		})
 	}
 	doChangePlatform(index,id,e){
 		let list = [...this.state.platformList];
@@ -60,20 +50,13 @@ class Comp extends Component {
 			platformList: list,
 		});
 	}
-	doChangeType(index,id,e){
-		let list = [...this.state.msgTypeList];
-		list.map((item)=>{
-			if(item.id == id){
-				item.checked = 1;
-				this.setState({
-					msgType: item.id
-				})
-			}else{
-				item.checked = 0;
-			}
-		});
+	doChangeType(type){
+		let msgTypeMap = {...this.state.msgTypeMap};
+		msgTypeMap[type].checked = 1;
 		this.setState({
-			msgTypeList : list
+			msgType: type,
+			msgTypeMap : msgTypeMap,
+			msgData: msgTypeMap[type].content
 		});
 	}
 	// 切换开关
@@ -92,23 +75,22 @@ class Comp extends Component {
 	}
 	doSend(){
 		this.setState({
-			msgData:{
-				platform: this.state.platform,
-				msgType: this.state.msgType
-			}
+			
 		},()=>{
 			this.xhr('/send',{
 				method:'POST',
-				data:this.state.msgData
+				data: {
+					msgType: this.state.msgType
+				}
 			});
 		})
 	}
 	xhr(url,option){
 		const xhr = new XMLHttpRequest();
-		const {method,mime,data} = option;
+		const {method,mime,data,onload} = option;
 		xhr.onreadystatechange = ()=>{
-			if(xhr.status == 200){
-				console.log(url+'send success!')
+			if(xhr.readyState == 4 && xhr.status == 200){
+				onload && onload(xhr.responseText);
 			}
 		};
 		xhr.open(method,'http://127.0.0.1:3000' + url);
@@ -152,18 +134,19 @@ class Comp extends Component {
 						<h5 className="u-ttl h5">type:</h5>
 						<ul className="m-server__glist">
 							{
-								this.state.msgTypeList.map((item,index)=>{
+								Object.keys(this.state.msgTypeMap).map((key)=>{
+									const item = this.state.msgTypeMap[key];
 									return (
-										<li key={item.id}>
+										<li key={key}>
 											<label className="u-label">
-												<input className="u-cb" type="radio" name="goods" defaultChecked={!!item.checked}
-													   onClick={this.doChangeType.bind(this,index,item.id)}
+												<input className="u-cb" type="radio" name="goods" defaultChecked={key == this.state.msgType}
+													   onClick={this.doChangeType.bind(this, key)}
 												/>
-												<span className="u-label__txt">{item.id}</span>
+												<span className="u-label__txt">{key}</span>
 											</label>
 											<label className="u-label">
 												<input className="u-cb" type="checkbox" name="switch" defaultChecked={!!item.switch}
-													   onClick={this.doChangeSwitch.bind(this,index,item.id)}
+													   onClick={this.doChangeSwitch.bind(this, item)}
 												/>
 												<span className="u-label__txt">线上</span>
 											</label>
@@ -177,7 +160,7 @@ class Comp extends Component {
 				<div className="m-server__footer">
 					<h5 className="u-ttl h5">data: (readonly) </h5>
 					<div className="m-server__data">
-						<textarea className="u-textarea" value={JSON.stringify(this.state.msgData)} readOnly></textarea>
+						<textarea className="u-textarea" value={this.state.msgData} readOnly></textarea>
 					</div>
 				</div>
 			</div>

@@ -12,10 +12,10 @@ const connectInfo = {
 
 
 class BaseMsg {
-	constructor(content, type, from, to) {
+	constructor(id, content, type, from, to) {
 		this.time = +new Date();
 		this.idServer = + new Date();
-		this.idClient = + new Date();
+		this.idClient = id || + new Date();
 		this.formatContent(content, type);
 	}
 	formatContent(content, type) {
@@ -73,12 +73,16 @@ class NIM {
 		this.socket.on('_customSysMsg', this.onCustomSysMsg.bind(this));
 		this.socket.on('_switch', this.onSwitch.bind(this))
 	}
+	disconnect() {
+		this.nimSocket.disconnect();
+		this.socket.disconnect();
+	}
 	onconnect() {
 		this.option.onconnect(connectInfo);
 	}
 	onMsg(json) {
-		const { content, type } = JSON.parse(json);
-		const msg = new BaseMsg(content, type, this.option.bid || -1, this.option.account);
+		const { id, content, type } = JSON.parse(json);
+		const msg = new BaseMsg(id, content, type, this.option.bid || -1, this.option.account);
 		this.option.onmsg(msg);
 	}
 	onCustomSysMsg(json) {
@@ -101,7 +105,7 @@ class NIM {
 
 		}
 		if (!content || !content.cmd) return;
-		if (this.switchMap[content.cmd]) {
+		if (!this.switchMap[content.cmd]) {
 			this.option.oncustomsysmsg(msg);
 		}
 	}

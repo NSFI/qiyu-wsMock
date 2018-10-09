@@ -1,19 +1,28 @@
+
 module.exports = {
 	'text': {
+		id: '12345',
 		type: 'text',
 		content: 'this is text'
 	},
 	'image': {
 		type: 'image',
-		content: JSON.stringify({
+		content: {
 			url:'https://socket.io/images/mixmax.png'
-		})
+		}
 	},
 	'file': {
 		type: 'file',
-		content: JSON.stringify({
+		content: {
 			url:'https://socket.io/images/mixmax.png'
-		})
+		}
+	},
+	'rich': {
+		type: 'custom',
+		content: {
+			cmd: 65,
+			content: '<ul><li>rich</li><li>2</li></ul>'
+		}
 	},
 	'onconnect':{
 		type:'custom',
@@ -21,7 +30,7 @@ module.exports = {
 	},
 	'onkefu':{
 		type:'custom',
-		content: JSON.stringify({
+		content: {
 			"shop": {
 				"setting": {
 					"staffReadSwitch": 1,
@@ -58,13 +67,30 @@ module.exports = {
 			"groupid": 0,
 			"staffname": "大白",
 			"exchange": -1
-		}),
+		},
 	},
-	'rich': {
+	'onmsgWithdraw': {
 		type: 'custom',
-		content: JSON.stringify({
-			cmd:65,
-			content:'<ul><li>rich</li><li>2</li></ul>'
-		})
-	},
+		content: {
+			cmd: 28,
+			msgIdClient: '12345',
+			sessionId: '12345',
+			result: 1,
+			message: ''
+		}
+	}
+	/* 'onvisitor': {
+		type: 'custom',
+		content: {
+			"cmd": 3,
+			"userid": "13f4e23003fafabd98512be476a695ad",
+			"old_sessionid": 0,
+			"userinfo": "[{\"value\":\"heartbeat\",\"key\":\"real_name\"}]",
+			"sessionid": 14332015,
+			"staffinfo": "{\"id\":29119,\"nickname\":\"shachaoheng\",\"realname\":\"shachaoheng\"}",
+			"old_sessiontype": 1,
+			"fromtype": "WEB",
+			"version": 44
+		}
+	} */
 };
