@@ -19,7 +19,25 @@ npm i fish-ws
 import {app} from 'fish-ws';
 ```
 
-#### 使用说明
+### cli使用
+
+初始化:    
+```cmd
+fish-ws init
+```
+
+启动mock服务：
+```cmd
+fish-ws server [参数]
+```
+fish-ws server可用的参数包括
+
+简写 | 全称 | 默认值 | 描述
+---|---|---|---
+-p | --port | 3000 | 服务端口
+
+
+#### 开发说明
 克隆工程后以npmscript来运行环境
 
 ```cmd
@@ -33,4 +51,5 @@ npm start	// 启动ws服务
 /	// 服务端下发消息面板
 /sdk	// sdk端模拟页面
 ```
+
 
