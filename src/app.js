@@ -16,6 +16,9 @@ const baseCfg = require('./config/base.js');
 const openUrl = require('./helper/openUrl.js');
 const msgType = require('./config/msgType');
 
+const dirPath = path.resolve(baseCfg.root, baseCfg.dir);
+const mockFilePath = path.resolve(dirPath, baseCfg.mock);
+
 class Server{
 	constructor(config){
 		this.conf = Object.assign({},baseCfg,config);
@@ -37,14 +40,16 @@ class Server{
 		//静态资源
 		router.get('/:name',function (req,res) {
 			const isFavico = req.url.indexOf('favicon.ico');
-			const dir = (isFavico == -1) ? '/public/fe/' : '/public/';
-			res.sendFile(process.cwd() + dir + req.url);
+			const dir = (isFavico == -1) ? 'public/fe/' : 'public/';
+			//res.sendFile(process.cwd() + dir + req.url);
+			res.sendFile(path.resolve(__dirname, '..', dir+req.url));
 		});
 		app.use(router);
 		
 		// 路由
 		app.get('/',function (req,res) {
-			res.sendFile(process.cwd() + '/public/fe/index.html');
+			//res.sendFile(process.cwd() + '/public/fe/index.html');
+			res.sendFile(path.resolve(__dirname, '..', 'public/fe/index.html'));
 		});
 		app.post('/send', (req,res) => {
 			const msgType = this.getMsgType();
@@ -97,7 +102,7 @@ class Server{
 	getMsgType() {
 		var ret;
 		try{
-			const content = fs.readFileSync('msgType.json', 'utf-8');
+			const content = fs.readFileSync(mockFilePath, 'utf-8');
 			ret = JSON.parse(content);
 		}catch(err) {
 			ret = msgType;

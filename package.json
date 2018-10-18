@@ -1,25 +1,25 @@
 {
   "name": "fish-ws",
   "version": "0.0.1",
-  "description": "ws server",
+  "description": "ws mock server for qiyu(fish)",
   "keywords": [
     "websocket",
     "cli",
     "tool",
     "fish"
   ],
-  "bin": "bin/index.js",
+  "bin": "bin/cli.js",
   "main": "src/app.js",
   "scripts": {
     "fe:dev": "webpack-dev-server --config ./src/webapp/webpack.dev.js",
-	"fe:build": "npm run fe:clean && webpack --config ./src/webapp/webpack.prd.js --progress && npm run clean && npm run cp",
+    "fe:build": "npm run fe:clean && webpack --config ./src/webapp/webpack.prd.js --progress && npm run clean && npm run cp",
     "fe:clean": "rm -rf ./src/webapp/dist/*",
     "version": "webpack --version",
     "lint": "eslint ./src/*.js",
     "fix": "eslint --fix ./src/*.js",
     "clean": "rm -rf ./public/fe/*",
     "cp": "cp ./src/webapp/dist/* ./public/fe/",
-	"start": "node ./src/index.js"
+    "start": "node ./src/index.js"
   },
   "pre-commit": [
     "fix",
