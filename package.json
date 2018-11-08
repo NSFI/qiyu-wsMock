@@ -1,6 +1,6 @@
 {
   "name": "fish-ws",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "ws mock server for qiyu(fish)",
   "keywords": [
     "websocket",
