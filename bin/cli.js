@@ -51,7 +51,7 @@ function init() {
 
 function startServer(argv) {
     if(!fs.existsSync(dirPath)) {
-        console.error('当前目录下未找到ws-mock文件夹，请先执行test init');
+        console.error('当前目录下未找到' + baseCfg.dir + '文件夹，请先执行init');
         return;
     }
     const config = {};

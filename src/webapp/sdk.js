@@ -16,6 +16,8 @@ class BaseMsg {
 		this.time = +new Date();
 		this.idServer = + new Date();
 		this.idClient = id || + new Date();
+		this.from = from || -1;
+		this.to = to;
 		this.formatContent(content, type);
 	}
 	formatContent(content, type) {
@@ -40,7 +42,7 @@ class SysMsg {
 		this.idServer = + new Date();
 		this.type = 'custom';
 		this.content = content;
-		this.from = from;
+		this.from = from || -1;
 		this.to = to;
 	}
 }
@@ -81,13 +83,13 @@ class NIM {
 		this.option.onconnect(connectInfo);
 	}
 	onMsg(json) {
-		const { id, content, type } = JSON.parse(json);
-		const msg = new BaseMsg(id, content, type, this.option.bid || -1, this.option.account);
+		const { id, content, type, from } = JSON.parse(json);
+		const msg = new BaseMsg(id, content, type, from, this.option.account);
 		this.option.onmsg(msg);
 	}
 	onCustomSysMsg(json) {
-		const { content } = JSON.parse(json);
-		const msg = new SysMsg(content, this.option.bid || -1, this.option.account);
+		const { id, content, from } = JSON.parse(json);
+		const msg = new SysMsg(content, from, this.option.account);
 		this.option.oncustomsysmsg(msg);
 	}
 	onSwitch(json) {

@@ -14,7 +14,12 @@ module.exports = {
 	'file': {
 		type: 'file',
 		content: {
-			url:'https://socket.io/images/mixmax.png'
+			expire: 1540534706335,
+			ext: "jpeg",
+			md5: "fcc73344f2aff2dfc63db5a1319267ac",
+			name: "img-75f90a1d6b2ac13741e87a598593b589.jpg",
+			size: 127850,
+			url: "https://nim.nosdn.127.net/MTAxNzA2Mw==/bmltYV8xNjM0NTgzXzE1Mzk5Mjk5MDU3ODFfODcxN2M0YWUtMGZjNS00NzMyLWIxNjctY2JiMTczZjQ1Y2Qw"
 		}
 	},
 	'rich': {
@@ -77,6 +82,17 @@ module.exports = {
 			sessionId: '12345',
 			result: 1,
 			message: ''
+		}
+	},
+	'ontransferResult': {
+		type: 'custom',
+		content: {
+			cmd: 95,
+			old_sessionid: 1111,
+			sessionid: 2222,
+			staffid: 333,
+			staffname: 'sch',
+			iconurl: 'https://ysf.nosdn.127.net/BDD91108186933293BE9FCB5ADE62BD7'
 		}
 	}
 	/* 'onvisitor': {
