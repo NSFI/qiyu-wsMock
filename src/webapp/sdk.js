@@ -67,7 +67,7 @@ class NIM {
 		if(yxNIM) {
 			this.nimSocket = new yxNIM(yxNIMOption);
 		}
-		this.socket = io('http://localhost:3000', {
+		this.socket = io('http://127.0.0.1:3000', {
 			reconnection: false
 		});
 		this.socket.on('connect', this.onconnect.bind(this));
