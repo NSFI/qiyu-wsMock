@@ -1,25 +1,16 @@
 import React, {Component, Fragment} from 'react';
+import { Radio, Checkbox, Input, Button } from 'antd';
+import config from '../../config/base';
 
+const { TextArea } = Input;
+const RadioGroup = Radio.Group;
 class Comp extends Component {
 	constructor() {
 		super();
 		
 		this.state = {
-			platformList:[
-				{
-					id:'visitor',
-					checked:1
-				},
-				/* {
-					id:'kefu',
-					checked:0
-				} */
-			],
 			msgTypeMap: {},
-			platform:0,	// 平台类型
 			msgType: '',	// 消息类型
-			// 上报实体
-			msgData: null
 		};
 	}
 	componentDidMount() {
@@ -34,56 +25,39 @@ class Comp extends Component {
 			msgTypeMap: result
 		})
 	}
-	doChangePlatform(index,id,e){
-		let list = [...this.state.platformList];
-		list.map((item)=>{
-			if(item.id == id){
-				item.checked = 1;
-				this.setState({
-					platform: item.id
-				})
-			} else{
-				item.checked = 0;
-			}
-		});
+	doChangeType(ev){
+		const type = ev.target.value;
 		this.setState({
-			platformList: list,
-		});
-	}
-	doChangeType(type){
-		let msgTypeMap = {...this.state.msgTypeMap};
-		msgTypeMap[type].checked = 1;
-		this.setState({
-			msgType: type,
-			msgTypeMap : msgTypeMap,
-			msgData: msgTypeMap[type].content
+			msgType: type
 		});
 	}
 	// 切换开关
-	doChangeSwitch(index,id,e){
-		const {msgTypeList} = this.state;
-		const list = [...this.state.msgTypeList];
-		list[index].switch = list[index].switch ? 0 : 1;
+	doChangeSwitch(msgType, e){
+		let msgTypeMap = { ...this.state.msgTypeMap };
+		msgTypeMap[msgType].switch = e.target.checked;
 		this.setState({
-			msgTypeList: list
-		},()=>{
-			this.xhr('/switch',{
-				method:'POST',
-				data: list[index]
-			});
-		})
+			msgTypeMap: msgTypeMap
+		});
+		this.xhr('/switch', {
+			method: 'POST',
+			data: {
+				msgType: msgType,
+				switch: +e.target.checked
+			}
+		});
 	}
 	doSend(){
+		this.xhr('/send',{
+			method:'POST',
+			data: {...this.state.msgTypeMap[this.state.msgType], msgType: this.state.msgType}
+		});
+	}
+	onDataChange(key, ev) {
+		let msgTypeMap = { ...this.state.msgTypeMap };
+		msgTypeMap[this.state.msgType][key] = ev.target.value;
 		this.setState({
-			
-		},()=>{
-			this.xhr('/send',{
-				method:'POST',
-				data: {
-					msgType: this.state.msgType
-				}
-			});
-		})
+			msgTypeMap: msgTypeMap
+		});
 	}
 	xhr(url,option){
 		const xhr = new XMLHttpRequest();
@@ -93,74 +67,82 @@ class Comp extends Component {
 				onload && onload(xhr.responseText);
 			}
 		};
-		xhr.open(method,'http://127.0.0.1:3000' + url);
+		xhr.open(method,'http://' + config.hostname + ':' + config.port + url);
 		xhr.setRequestHeader('Content-Type','application/json');
 		xhr.send(JSON.stringify(data));
 	}
 	render() {
+		const { msgType, msgTypeMap } = this.state;
+		const currentMsg = msgTypeMap[msgType] || {};
 		return (
 			<div className="m-server" id="root">
 				<div className="m-server__header">
 					<div className="m-server__header__main">
-						<h2 className="u-ttl h2">W.S. Helper <span className="small">v0.0.1</span></h2>
+						<h2 className="u-ttl h3">W.S. Helper <span className="small">v0.0.1</span></h2>
 					</div>
 					<div className="m-server__header__side">
-						<button className="u-btn" 
-								onClick={this.doSend.bind(this)}
-						>Send Message</button>
+						<Button
+							type="primary"
+							disabled={!msgType}
+							onClick={this.doSend.bind(this)}
+						>Send Message</Button>
 					</div>
 				</div>
 				<div className="m-server__bodyer">
-					<div className="m-server__platform">
-						<h5 className="u-ttl h5">platform: </h5>
-						<ul className="m-server__plist">
-						{
-							this.state.platformList.map((item,index)=>{
-								return (
-									<li key={item.id} >
-										<label className="u-label">
-											<input className="u-cb" type="radio" name="platform" defaultChecked={!!item.checked}
-												   onClick={this.doChangePlatform.bind(this,index,item.id)}
-											/>
-											<span className="u-label__txt">{item.id}</span>
-										</label>
-									</li>
-								)
-							})
-						}
-						</ul>
-					</div>
 					<div className="m-server__goods">
-						<h5 className="u-ttl h5">type:</h5>
-						<ul className="m-server__glist">
+						<h5 className="u-ttl h5">消息类型</h5>
+						<RadioGroup 
+							className="m-server__glist" 
+							value={msgType}
+							onChange={this.doChangeType.bind(this)}
+						>
 							{
-								Object.keys(this.state.msgTypeMap).map((key)=>{
-									const item = this.state.msgTypeMap[key];
+								Object.keys(msgTypeMap).map((key)=>{
+									const item = msgTypeMap[key];
 									return (
-										<li key={key}>
+										<Radio 
+											value={key} 
+											key={key}
+											style={{display:'block'}}
+										>
+											<span className="specType">{item.specType}</span>
 											<label className="u-label">
-												<input className="u-cb" type="radio" name="goods" defaultChecked={key == this.state.msgType}
-													   onClick={this.doChangeType.bind(this, key)}
-												/>
-												<span className="u-label__txt">{key}</span>
+												<Checkbox
+													checked={!!item.switch}
+													onChange={this.doChangeSwitch.bind(this, key)}
+												>
+													线上
+												</Checkbox>
 											</label>
-											<label className="u-label">
-												<input className="u-cb" type="checkbox" name="switch" defaultChecked={!!item.switch}
-													   onClick={this.doChangeSwitch.bind(this, item)}
-												/>
-												<span className="u-label__txt">线上</span>
-											</label>
-										</li>
+										</Radio>
 									)
 								})
 							}
-						</ul>
+						</RadioGroup>
 					</div>
 				</div>
 				<div className="m-server__footer">
-					<h5 className="u-ttl h5">data: (readonly) </h5>
+					<h5 className="u-ttl h5">消息内容</h5>
 					<div className="m-server__data">
-						<textarea className="u-textarea" value={this.state.msgData} readOnly></textarea>
+						<label>id</label>
+						<Input
+							value={currentMsg.id}
+							disabled={!msgType}
+							onChange={this.onDataChange.bind(this, 'id')}
+						></Input>
+						<label>from</label>
+						<Input 
+							value={currentMsg.from}
+							disabled={!msgType}
+							onChange={this.onDataChange.bind(this, 'from')}
+						></Input>
+						<label>content</label>
+						<TextArea 
+							disabled={!msgType}
+							value={currentMsg.content} 
+							autosize 
+							onChange={this.onDataChange.bind(this, 'content')}
+						/>
 					</div>
 				</div>
 			</div>

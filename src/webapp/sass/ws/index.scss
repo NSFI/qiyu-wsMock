@@ -6,6 +6,11 @@ html{
 body{
     height: 100%;
     background-color: #F5F6F7;
+    &::-webkit-scrollbar{width: 7px;}
+    &::-webkit-scrollbar-button{display: none;}
+    &::-webkit-scrollbar-track{width: 7px;}
+    &::-webkit-scrollbar-track-piece{background:transparent;}
+    &::-webkit-scrollbar-thumb{border-radius: 3px;background: #dddfe0;}
 }
 
 .m-server{
@@ -14,9 +19,9 @@ body{
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 0 50px;
+    padding: 0 25px 25px;
     .m-server__header{
-        padding-bottom: 20px;
+        padding-bottom: 30px;
         .m-server__header__main{
             .small{
                 font-size: 12px;
@@ -31,15 +36,13 @@ body{
 			min-height: 300px;
 		}
 	}
-    .m-server__platform{
-        .u-label{
-            margin-right: 10px;
-            margin-left: 10px;
-        }
-    }
     .m-server__goods{
         padding-top: 10px;
         .m-server__glist{
+            .specType {
+                display: inline-block;
+                min-width: 120px;
+            }
             .u-label{
                 margin-bottom: 10px;
                 margin-left: 10px;
@@ -52,6 +55,12 @@ body{
 		.m-server__g2list{
 			padding-left: 50px;
 		}
+    }
+    .m-server__data {
+        label {
+            display: inline-block;
+            margin: 5px 0;
+        }
     }
 }
 

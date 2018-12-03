@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import config from '../config/base';
 
 const yxNIM = window.NIM;
 
@@ -10,12 +11,22 @@ const connectInfo = {
 	"country": ""
 };
 
+const customMsgMap = {
+	60: !0,
+	90: !0,
+	95: !0,
+	72: !0,
+	200: !0,
+	65: !0,
+	203: !0,
+	121: !0
+};
 
 class BaseMsg {
 	constructor(id, content, type, from, to) {
-		this.time = +new Date();
-		this.idServer = + new Date();
-		this.idClient = id || + new Date();
+		this.time = +new Date;
+		this.idServer = + new Date;
+		this.idClient = id || (+new Date+'#'+new Date);
 		this.from = from || -1;
 		this.to = to;
 		this.formatContent(content, type);
@@ -38,8 +49,9 @@ class BaseMsg {
 
 class SysMsg {
 	constructor(content, from, to) {
-		this.time = +new Date();
-		this.idServer = + new Date();
+		this.time = +new Date;
+		this.idServer = + new Date;
+		this.idClient = id || (+new Date + '#' + new Date);
 		this.type = 'custom';
 		this.content = content;
 		this.from = from || -1;
@@ -50,9 +62,7 @@ class SysMsg {
 class NIM {
 	constructor(option) {
 		this.socket = null;
-		this.switchMap = {
-			65: 0
-		}
+		this.switchMap = {};
 		this.option = option;
 		this.connect();
 	}
@@ -67,34 +77,40 @@ class NIM {
 		if(yxNIM) {
 			this.nimSocket = new yxNIM(yxNIMOption);
 		}
-		this.socket = io('http://127.0.0.1:3000', {
+		const socketUrl = 'http://' + config.hostname + ':' + config.port;
+		this.socket = io(socketUrl, {
 			reconnection: false
 		});
 		this.socket.on('connect', this.onconnect.bind(this));
 		this.socket.on('_message', this.onMsg.bind(this));
 		this.socket.on('_customSysMsg', this.onCustomSysMsg.bind(this));
-		this.socket.on('_switch', this.onSwitch.bind(this))
+		this.socket.on('_switch', this.onSwitch.bind(this));
+		this.socket.on('_syncSwitchSetting', this.onSyncSwitchSetting.bind(this));
 	}
 	disconnect() {
 		this.nimSocket.disconnect();
 		this.socket.disconnect();
 	}
 	onconnect() {
-		this.option.onconnect(connectInfo);
+		// this.option.onconnect(connectInfo);
 	}
-	onMsg(json) {
-		const { id, content, type, from } = JSON.parse(json);
+	onMsg({ id, content, type, from }) {
 		const msg = new BaseMsg(id, content, type, from, this.option.account);
 		this.option.onmsg(msg);
 	}
-	onCustomSysMsg(json) {
-		const { id, content, from } = JSON.parse(json);
+	onCustomSysMsg({ id, content, from, cmd }) {
 		const msg = new SysMsg(content, from, this.option.account);
-		this.option.oncustomsysmsg(msg);
+		if(customMsgMap[cmd]) {
+			this.option.onmsg(msg);
+		}else {
+			this.option.oncustomsysmsg(msg);
+		}
 	}
-	onSwitch(json) {
-		const { cmd, value } = JSON.parse(json);
+	onSwitch({cmd, value}) {
 		this.switchMap[cmd] = value;
+	}
+	onSyncSwitchSetting(data) {
+		this.switchMap = data || {};
 	}
 	onyxMsg(msg) {
 		this.option.onmsg(msg);
@@ -107,7 +123,7 @@ class NIM {
 
 		}
 		if (!content || !content.cmd) return;
-		if (!this.switchMap[content.cmd]) {
+		if (this.switchMap[content.cmd] !== 0) {
 			this.option.oncustomsysmsg(msg);
 		}
 	}
@@ -117,8 +133,14 @@ class NIM {
 	sendFile(msg) {
 		this.nimSocket.sendFile(msg);
 	}
+	sendCustomMsg(msg) {
+		this.nimSocket.sendCustomSysMsg(msg);
+	}
 	sendCustomSysMsg(msg) {
 		this.nimSocket.sendCustomSysMsg(msg);
+	}
+	previewFile(msg) {
+		this.nimSocket.previewFile(msg);
 	}
 }
 

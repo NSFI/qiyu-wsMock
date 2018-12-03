@@ -33,12 +33,19 @@ const config = {
 				loader: "babel-loader"
 			},
 			{
-				test:/\.(sc|c)ss$/,
+				test:/\.scss$/,
 				exclude: /node_modules/,
 				use:[
 					'style-loader',
 					'css-loader',
 					'sass-loader'
+				]
+			},
+			{
+				test: /\.css$/,
+				use: [
+					'style-loader',
+					'css-loader'
 				]
 			},
 			{

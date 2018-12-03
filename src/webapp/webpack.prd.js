@@ -40,12 +40,19 @@ const config = {
 				}
 			},
 			{
-				test:/\.(sc|c)ss$/,
+				test: /\.scss$/,
 				exclude: /node_modules/,
-				use:[
-					MiniCssExtractPlugin.loader,
+				use: [
+					'style-loader',
 					'css-loader',
 					'sass-loader'
+				]
+			},
+			{
+				test: /\.css$/,
+				use: [
+					'style-loader',
+					'css-loader'
 				]
 			}
 		]

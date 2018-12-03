@@ -1,17 +1,19 @@
 
 module.exports = {
 	'text': {
-		id: '12345',
+		specType: 'text',
 		type: 'text',
-		content: 'this is text'
+		content: 'this is text',
 	},
 	'image': {
+		specType: 'image',
 		type: 'image',
 		content: {
 			url:'https://socket.io/images/mixmax.png'
 		}
 	},
 	'file': {
+		specType: 'file',
 		type: 'file',
 		content: {
 			expire: 1540534706335,
@@ -22,18 +24,16 @@ module.exports = {
 			url: "https://nim.nosdn.127.net/MTAxNzA2Mw==/bmltYV8xNjM0NTgzXzE1Mzk5Mjk5MDU3ODFfODcxN2M0YWUtMGZjNS00NzMyLWIxNjctY2JiMTczZjQ1Y2Qw"
 		}
 	},
-	'rich': {
+	'65': {
+		specType: 'rich',
 		type: 'custom',
 		content: {
 			cmd: 65,
 			content: '<ul><li>rich</li><li>2</li></ul>'
 		}
 	},
-	'onconnect':{
-		type:'custom',
-		content:'已建立连接'
-	},
-	'onkefu':{
+	'2':{
+		specType: 'onkefu',
 		type:'custom',
 		content: {
 			"shop": {
@@ -47,7 +47,7 @@ module.exports = {
 				"qiyuInfoSwitch": 1,
 				"hasEmail": 1,
 				"hasMobile": 0,
-				"name": " 七鱼测试企业123"
+				"name": "七鱼测试企业123"
 			},
 			"realStaffid": -1,
 			"operator_enable": 1,
@@ -74,7 +74,8 @@ module.exports = {
 			"exchange": -1
 		},
 	},
-	'onmsgWithdraw': {
+	'28': {
+		specType: 'onmsgWithdraw',
 		type: 'custom',
 		content: {
 			cmd: 28,
@@ -84,7 +85,8 @@ module.exports = {
 			message: ''
 		}
 	},
-	'ontransferResult': {
+	'95': {
+		specType: 'ontransferResult',
 		type: 'custom',
 		content: {
 			cmd: 95,
@@ -95,18 +97,4 @@ module.exports = {
 			iconurl: 'https://ysf.nosdn.127.net/BDD91108186933293BE9FCB5ADE62BD7'
 		}
 	}
-	/* 'onvisitor': {
-		type: 'custom',
-		content: {
-			"cmd": 3,
-			"userid": "13f4e23003fafabd98512be476a695ad",
-			"old_sessionid": 0,
-			"userinfo": "[{\"value\":\"heartbeat\",\"key\":\"real_name\"}]",
-			"sessionid": 14332015,
-			"staffinfo": "{\"id\":29119,\"nickname\":\"shachaoheng\",\"realname\":\"shachaoheng\"}",
-			"old_sessiontype": 1,
-			"fromtype": "WEB",
-			"version": 44
-		}
-	} */
 };
