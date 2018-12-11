@@ -60,9 +60,9 @@ class Server{
 			// content为字符串，复杂数据为json字符串
 			const { msgType, content } = req.body;
 			const msgTypeMap = this.getMsgTypeMap();
-			var ret = {...msgTypeMap[msgType], ...req.body}
+			var ret = Object.assign({}, msgTypeMap[msgType], req.body);
 			if(ret.type == 'custom'){
-				ret = {...ret, cmd: msgType};
+				ret.cmd = msgType;
 				io.emit('_customSysMsg', ret);
 				console.log('下发：自定义消息', ret)
 			}else{
