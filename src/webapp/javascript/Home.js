@@ -105,7 +105,7 @@ class Comp extends Component {
 											key={key}
 											style={{display:'block'}}
 										>
-											<span className="specType">{item.specType}</span>
+											<span className="specType" title={item.desc}>{item.specType}</span>
 											<label className="u-label">
 												<Checkbox
 													checked={!!item.switch}
@@ -125,18 +125,21 @@ class Comp extends Component {
 					<h5 className="u-ttl h5">消息内容</h5>
 					<div className="m-server__data">
 						<label>id</label>
+						<span className="tip">（必须唯一，不填随机生成）</span>
 						<Input
 							value={currentMsg.id}
 							disabled={!msgType}
 							onChange={this.onDataChange.bind(this, 'id')}
 						></Input>
 						<label>from</label>
+						<span className="tip">（消息来源，用于平台电商区分不同商户）</span>
 						<Input 
 							value={currentMsg.from}
 							disabled={!msgType}
 							onChange={this.onDataChange.bind(this, 'from')}
 						></Input>
 						<label>content</label>
+						<span className="tip">（消息体，可编辑）</span>
 						<TextArea 
 							disabled={!msgType}
 							value={currentMsg.content} 

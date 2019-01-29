@@ -2,6 +2,7 @@
 module.exports = {
 	"2": {
 		"specType": "onkefu",
+		"desc": "访客端申请客服成功(cmd:2)",
 		"type": "custom",
 		"content": {
 			"shop": {
@@ -44,6 +45,7 @@ module.exports = {
 	},
 	"28": {
 		"specType": "onmsgWithdraw",
+		"desc": "消息撤回结果(cmd:28)",
 		"type": "custom",
 		"content": {
 			"cmd": 28,
@@ -54,7 +56,7 @@ module.exports = {
 		}
 	},
 	"65": {
-		"specType": "rich",
+		"specType": "richtext",
 		"type": "custom",
 		"content": {
 			"cmd": 65,
@@ -63,6 +65,7 @@ module.exports = {
 	},
 	"95": {
 		"specType": "ontransferResult",
+		"desc": "会话转接结果(cmd:95)",
 		"type": "custom",
 		"content": {
 			"cmd": 95,
@@ -75,6 +78,7 @@ module.exports = {
 	},
 	"13": {
 		"specType": "onkfStatus",
+		"desc": "客服在线状态切换结果(cmd:13)",
 		"type": "custom",
 		"content": {
 			"cmd": 13,
@@ -108,6 +112,7 @@ module.exports = {
 	},
 	"3": {
 		"specType": "onSession",
+		"desc": "客服端接到新会话(cmd:3)",
 		"type": "custom",
 		"content": {
 			"staffinfo": "{\"nickname\":\"换一个很长长长长长长长长长长的名字试试\",\"id\":31006,\"realname\":\"超级管理员\"}",
