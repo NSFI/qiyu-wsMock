@@ -48,7 +48,7 @@ class BaseMsg {
 }
 
 class SysMsg {
-	constructor(content, from, to) {
+	constructor(id, content, from, to) {
 		this.time = +new Date;
 		this.idServer = + new Date;
 		this.idClient = id || (+new Date + '#' + new Date);
@@ -99,7 +99,7 @@ class NIM {
 		this.option.onmsg(msg);
 	}
 	onCustomSysMsg({ id, content, from, cmd }) {
-		const msg = new SysMsg(content, from, this.option.account);
+		const msg = new SysMsg(id, content, from, this.option.account);
 		if(customMsgMap[cmd]) {
 			this.option.onmsg(msg);
 		}else {
