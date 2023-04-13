@@ -60,6 +60,12 @@ class SysMsg {
 }
 
 class NIM {
+	static getInstance(data) {
+		if (!NIM.instance){
+			NIM.instance = new NIM(data);
+			return NIM.instance;
+		}
+    }
 	constructor(option) {
 		this.socket = null;
 		this.switchMap = {};
